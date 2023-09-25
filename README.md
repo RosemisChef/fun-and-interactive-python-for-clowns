@@ -32,11 +32,11 @@ In the section that pops up, search for "chat-downloader" and install it (hoveri
 
 ## Getting chat (the fun part)
 
-New Concepts In This Section:
-[Print](https://www.w3schools.com/python/ref_func_print.asp)
-[Strings](https://www.w3schools.com/python/python_strings.asp)
-[Comments](https://www.w3schools.com/python/python_comments.asp)
-Functions (which we will ignore for now)
+New Concepts In This Section:  
+[Print](https://www.w3schools.com/python/ref_func_print.asp)  
+[Strings](https://www.w3schools.com/python/python_strings.asp)  
+[Comments](https://www.w3schools.com/python/python_comments.asp)  
+Functions (which we will ignore for now)  
 
 You should be in a file called "main.py" with code that looks like this:
 ```python
