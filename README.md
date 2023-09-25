@@ -27,7 +27,7 @@ Pretty straightforward, go download PyCharm: https://www.jetbrains.com/pycharm/d
 PyCharm Community Edition is free software that will make it easy to run and edit Python code. Hit download, install it. The defaults should be fine. When you have PyCharm running click New Project, check the checkbox that says "Create a main.py welcome script", name it whatever you want and click Create.
 
 Remember that Innertube API thing? First we need to get the code onto your computer. From within PyCharm, go to the Menu at the top -> View -> Tool Windows -> Python Packages.
-In the section that pops up, search for "chat-downloader" and install it (hovering over the result should give an Install option, pick the newest version).
+In the section that pops up, search for "chat-downloader" and install it (hovering over the result should give an Install option, pick the newest version if it asks).
 
 
 ## Getting chat (the fun part)
