@@ -395,8 +395,8 @@ And running this on the VOD, it draws... well what are the odds. I swear I didn'
 New Concepts In This Section:  
 [Try/Except](https://www.w3schools.com/python/python_try_except.asp)  
 [String .index() function](https://www.w3schools.com/python/ref_string_index.asp)  
-[String Slicing](https://www.w3schools.com/python/python_strings_slicing.asp)
-[String .strip() function](https://www.w3schools.com/python/ref_string_strip.asp)
+[String Slicing](https://www.w3schools.com/python/python_strings_slicing.asp)  
+[String .strip() function](https://www.w3schools.com/python/ref_string_strip.asp)  
 
 Next let's give chat the power to change the color of the line. If the turtle gets an invalid color it crashes the whole program, so we have to be careful. Crashed program = no more picture. Apparently Python has a [bafflingly long and specific list of named colors](https://www.discogcodingacademy.com/turtle-colours). Instead of adding them all manually, we can let chat try a color and recover if it fails. As another checkpoint, here is the whole code with a new section for color at the bottom: 
 ```python
@@ -701,4 +701,12 @@ if __name__ == '__main__':
             print("invalid input")
 
 ```
+
+
+Future topics:
+- What to do when someone in chat inevitably types "circl:100000000" and sends the turtle into low earth orbit
+- More turtle controls
+- Superchats
+
+
 
