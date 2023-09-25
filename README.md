@@ -277,7 +277,7 @@ Out of that JSON, we want the message. "message" is on the top level of the JSON
 New Concepts In This Section:  
 [Python Operators (+=, >=)](https://www.w3schools.com/python/python_operators.asp)  
 [Python "in" keyword for strings](https://www.w3schools.com/python/ref_keyword_in.asp)  
-[If Statements](https://www.w3schools.com/python/python_conditions.asp)
+[If Statements](https://www.w3schools.com/python/python_conditions.asp)  
 [Multiline Strings](https://www.w3schools.com/python/gloss_python_multi_line_strings.asp)  
 
 First let's delete the line `print(json.dumps(chat_item, indent=2))`. It was nice to look at for a minute, but it's really spamming the console. You can add it back temporarily at any time if you want to check what the `chat_item`s look like.
