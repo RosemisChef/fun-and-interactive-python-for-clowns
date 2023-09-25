@@ -280,7 +280,7 @@ New Concepts In This Section:
 [If Statements](https://www.w3schools.com/python/python_conditions.asp)  
 [Multiline Strings](https://www.w3schools.com/python/gloss_python_multi_line_strings.asp)  
 
-First let's delete the line `print(json.dumps(chat_item, indent=2))`. It was nice to look at for a minute, but it's really spamming the console. You can add it back temporarily at any time if you want to check what the `chat_item`s look like.
+First let's delete the line `print(json.dumps(chat_item, indent=2))`. It was nice to look at for a minute, but it's really spamming the console. You can add it back temporarily at any time if you want to check what the `chat_item`s look like.  
 You can check if one string contains another string with the "in" keyword. Add this within the for loop:
 ```python
          if ":_carnieCheer:" in chat_item["message"]:
