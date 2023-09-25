@@ -704,7 +704,7 @@ if __name__ == '__main__':
 
 
 Future topics:
-- What to do when someone in chat inevitably types "circl:100000000" and sends the turtle into low earth orbit
+- What to do when someone in chat inevitably types "circle:100000000" and sends the turtle into low earth orbit
 - More turtle controls
 - Superchats
 
