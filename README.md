@@ -110,7 +110,7 @@ Running this code right now will do nothing. You can click play and it should ru
     for chat_item in chat_download:
       chat_download.print_formatted(chat_item)
 ```
-This is an example of a "for loop". `chat_download` is like a book with a bunch of pages. When we say `for chat_item in chat_download:`, its like looking at each page in the book one at a time. The current page we are looking at is `chat_item`, and all the information from that page is in that `chat_item`. When we flip to the next page (reach the bottom of the for loop), `chat_item` will have all the information from the next page and the code will start from the top of the for loop. Whatever we put below this section will run once for each "page".
+This is an example of a "for loop". `chat_download` is like a book with a bunch of pages. When we say `for chat_item in chat_download:`, its like looking at each page in the book one at a time. The current page we are looking at is `chat_item`, and all the information from that page is in that `chat_item`. When we flip to the next page (reach the bottom of the for loop), it will start again from the top of the for loop and `chat_item` will have all the information from the next page. Whatever we put in the indented section below the `for chat_item in chat_download:` line will run once for each "page".
 
 The section inside the for loop
 ```python
