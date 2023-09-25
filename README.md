@@ -74,7 +74,7 @@ Now that we know that Python works, delete everything in the file. Yep, just sel
 New Concepts In This Section:  
 [Variables](https://www.w3schools.com/python/python_variables.asp)  
 [Indentation](https://www.w3schools.com/python/gloss_python_indentation.asp)  
-Optional reading, probably better to ignore for now:  
+Optional reading, these aren't necessary concepts yet:  
 [Modules](https://www.w3schools.com/python/python_modules.asp)  
 [Creating Objects](https://www.w3schools.com/python/python_classes.asp)  
 
