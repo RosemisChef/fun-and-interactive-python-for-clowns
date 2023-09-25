@@ -534,3 +534,119 @@ And we can refactor the whole "chat controls the turtle" section into something 
 Here I changed all the `chat_item["message"]`s into a single variable called `message`. If you see your code spammed with the same weird looking thing over and over, it's generally a sign that a variable would make your life easier (or at least easier to read).
 
 With this change, chat can type things like "left:5", "forward: 25", "circle:10", or "color: magenta" and it will try to process them. If any of them fail it will print "invalid input", and only one command is allowed per chat message.
+
+
+
+Here is the complete code up to this point:
+```python
+from chat_downloader import ChatDownloader
+import json
+import turtle
+
+def substring_after(target: str, message: str):
+    index = message.index(target) + len(target)
+    substring = message[index:].strip()
+    return substring
+
+if __name__ == '__main__':
+    # You can copy/paste any youtube livestream URL that has a chat here
+    #   If it is currently live, it will keep getting messages as they are added
+    #   If it isn't live, it will get the chat history
+    url = 'https://www.youtube.com/watch?v=L-jsPlH44Sg'
+
+    # Create a chat downloader
+    downloader = ChatDownloader()
+
+    # Give us all the messages from this livestream
+    chat_download = downloader.get_chat(url, message_groups=['messages'])
+
+    cheer_count = 0
+
+    screen = turtle.getscreen()
+    turtle = turtle.getturtle()
+    turtle.pensize(3)
+    turtle.color("green")
+
+    # Look at each chat message as they are added
+    for chat_item in chat_download:
+        chat_download.print_formatted(chat_item)
+        if ":_carnieCheer:" in chat_item["message"]:
+            cheer_count += 1
+        if cheer_count >= 100:
+            print('''
+            77?7!!!!^:!!!!!!!?Y!!!!!!!!?J~:!!!!!~:..^~!!!!!7!!!77777??????7!!!!!!!!!!!!7J?7!!!!!!~~~!~^~?7777??J
+            77?!!!!~.~!!!!!!7?J!!7!!!!!!?J~^~!!!!~^:..:~!!!!!77!!!!!!777777??77!!!!!!!!!7JJ?7!!!!!!!!7!~~777777?
+            7?7!!!!::!!!!!!!?~J!!7!!!!!~!?J7^~!!!!!!^:..:^~!!!!!!7!!!!!!!!!!!!7777777!!!!?JJ?7!!!!!!!!77!^!?7777
+            7?!!!!~.^!!!!!!!!:J!!77!!!!!~!7J?!~!!!!!!!~^::.:^~!!!!!!!!!!!!77777777777?????JYJ?7!!!!!!!!77!~!?777
+            ??!!!!:.^!!!!!!7^:Y!!!7!!!!!!~~!?J?!!!!!!!!!!!~~^::^^~~!!!!!!!7777??JJJJ??77!!!JY??7!!!!!!!!777~!?77
+            J7!!!!..~!!!!!!?::Y!!!77!!!!!!~~~!7JJ?77!!!!!!!!77!!!!!!!!77????JJJ?777!!!!!!!!7JY?7!!!!!!!!7777!!?7
+            J!!!!~..~!!!!!!7..J7!!!77!!!!!!!~~~!7?JJJJJ??7777777?J?7!!!!!7777!!!^~!!!!!!!!!!?YJ77!!!!!!!77777!!?
+            ?!!!!^..~!!!!!7~..77!!!!77!!!!!!!!!~~~!~777???????7777!~^^^~~!!!!!!!~:~!!!!!!!!!?JY?77!!!!!!!!7777~!
+            7!!!!^..^!!!!!!^..!7~!!!!!!!~~~~~~~~~^^:^^^^^^^^^^^^^^^~~!!!!!!!!!!!!::!!!!!!!!!7JYJ77!!!!!!!!!7777~
+            7~!!!:..^!~~~^~^..:7^~~~^~~!~^^^^^^^^^^:~^^^^^^^^^^^~~!!!!!!!!!!!!!!!~:~7!!!!!!!!?JY?77!!!!!!!!!777!
+            ?~~!~:..:!~^^^~^...7^~~~^^^~!~~^^^^:^^^:~^^^^^^^^~~!!!!!!!!!!!!!!!!!!!:^7!!!!!!!!?JY?7?!!!!!!!!!!!77
+            J!^!!^...!!~~^~^...~~~!~^^^^~~!!~~~^^^^:^~^^~~~~!!!!!!!!!!!!!!!!!!!!!!~:!7!!!!!!!?JYJ7?7!!!!!!!!!!!!
+            Y7^!!~...!7!!~!~...:7~!!~^^^^^~~^~!!!!!~~!!!!!!!!!!!!!!!!!!77!!!!!!!!!!:~7!!!!!!!?Y5J77?!!!!!!!!!!!!
+            YJ~^!~...^?!!!!!....~7!!7!!!!!!!::!!!!!7777777!!!!!!!!!!!!!7777777!!777~~?!!!!!!!?YY??!?77!!!!!!!!!!
+            JY7:~!:..:?7!!!7^....77!777!7777~.:~~!!!!!777777!!!!!7!!!!!777777??JJ?7~7Y!77!!!7?J7?J!7777!!!!!!!!!
+            ?Y?~:!~...7?!!!!!....:J?7??777777:.^~!!7~~77777!!!!!77!!!!!77???????777~?Y!77!!!7J?~?J!!?77!!!!!!!!!
+            7YY7^:!:..^?7!!!7~....:J??JJ??77?!..^~!?!^!77??7!!!!777!!!!!7??7777?7777JJ7777777J^~7J!!7777!!!!!!!!
+            7J??7^^^..:!?!!!!7:....:??77??777?^..:~7?~~77???7!!!777!!!!!7??7777??77?7?77?777J!.~^7777777!!!!!!!!
+            7?7.~7~::..:77!!!7!.....:?J?7??77?J~:.^!?7~~77???7!!!77!!!!!77J?777??777777?777?7:..:7?7!777!!!!!!!!
+            ??7..:~~::..^7?7777!......!??????7JY!^:^!?!~!77?7?77!!77!!!!!7YY777??77!?7?J?J5BGGPP5Y?!!777!!!!!!!!
+            J?7.....^~^::^777777!:..:::^7??????J?!~^~77~~!77?J?77!!7!!!!!7J577???YP5JYYY5G###&&&&BY??J??7!!!!!!!
+            ?J?^....:~~^^~!JJ?????!!~~^:::^~!!~!!~~~~!7!~~777?!??7!!7!!!!!?J?JJYPB5JYPPGB#B5?!!!7Y?7?JYYJJ7!!!!!
+            7JY7.....:^!YG#&&BG5YYYPGGGP5Y?!^:......::~!~~!777::!7777!!!!7YPYY5BBP5GBBBBBBBG5J^:^J!~!7YYJ7!!!!!!
+            !7YY^.:~75B&&&BGGP5PBGGP55PB##&##GY~:........:^~!7~..:^!777!7?YJ?Y?!?GBBBBBBBBBBB#J.:?~~!!YJ7!!!!!!~
+            77?YYYP#@B5J7!~^^^JY?7JGBGGGBBBB#BGPY7^..........::......:~~!!^:Y~  .YBPPGGGGGGGGGG^:?~!!!J?!~~~~~~!
+            !!!?5#@&B~:::::::JG:   7BBBBBBBBBBJ^.::....................... ~B5?7J5GP5Y???????JG!~7~!!7?!~~~~~~!!
+            !!!!7YGBB7.......PB57!?YPGGP55GGGGGY.......................... ^GJ77!J5PY!~!77777?P^!!!!^!?!~~~~!!!!
+            ~~!!!!?YGP^      5GYJJJJ???5PP5?7?YG~...........................JJ!~^^^^::^~!7!!7Y7:7~!~^77~~~~!!!7~
+            !!~~~~!!?YY~     7Y?7777!~^!JJ7~~!7Y^...........................:7~^:..::^^~!!^.~7:77!~^~?!~~~~~~~^^
+            ~!!~~~~~~~!7~^^^^!YY777!~^:...::^^:^...........  .................:::::^^^^^~^^^^:~?!~^^!7^^^^^^^^^^
+            ~~~~~~~~~~~~~!!!~^:7J7!~~^^^^::::::...........   .................:::::::^!!!7^::^?~^^^~7~^::^^^^^^^
+            777!!!!~~~!!!~^::^:^^^~~~^^^:::::::................................:::::::7YY7:::7!^^^~77^:::^^^^^^^
+            7777??JJ?7^::.:::::^:::~!!!^::::::..................................:::::::?J^::!~^^^~^7^:..:^:^^^^^
+            !!!~~~~!!7~^::::^^^~:::~JY?::::::..........................................^^:^~~^^~~:!~:...::::::^~
+            ^^^^^^^^^^~~~^^^^:^~::::~J!::::....................................:.......:^~~^^^^:.~^.....::^^~!!!
+            ^^^::::::::::::..:~:::::.^^...............................::..  ...^~^:::^^^^^^^:..:~:.....:.:^^^:::
+            ::::::::::......:!:................... ..::..:~..^!^:^7!:^?J7??7.....:::^^^:::...:^^......^^::::::::
+            ::::::::......::!^....................7J?Y5?7Y5JJYYYJJYYYY5PPPPP7.....:^::.....:::......^~^::::::...
+            ^:::::::::::::^7~....:~............. ^5P55555YJ?7!!~~~~~~~!7?JY5J......^~^^:........::~!!^:::::.::.:
+            ^~~^:::::::::~77~:::^~^..............:Y555Y?!~~~~~~~~~~~~~~~~~!?~.........:::^^^^^~~!!~^::::::::::^~
+            ::^~~~~~~^^~~~^::.:^^.................^YY?!~~~~~~~~~~~~~~~~~~~~^.............:~!!~~^^:::^:::^^~~!777
+            !~^::^^::::..:::^??^.................. :~~~~~~~~~~~~~~~~~~~~~^:...................:!????!~!!!!!!!!!~
+            ~~!~~~~~^^^^~!7^ :!7~:....................^^~~~~~~~~~~~~~~^:....................:~7J??J?!!!!!!!!!~^:
+            :^~~~~~~~!!!!!!!^: .~7~:.....................::^^~~~~~^^:....................:^!?????77!!!!~^^::....
+            ::::^~~!!!~~~~~~!!^. .~!!^:.....^:.......................................:^~7??????7~::~~::.........
+            ::......:...:::::::::^!JYYJ7!~~!^....................................:^~7???????7!^..^^:............
+            :::::::...............:^^~~~~!JJ!~^:.............................:~!J5YYYJ???7!^:...::..............
+            ''')
+            cheer_count = 0
+
+        message = chat_item["message"]
+
+        try:
+            if "left:" in message.lower():
+                amount = substring_after("left:", message)
+                turtle.left(float(amount))
+            elif "right:" in message.lower():
+                amount = substring_after("right:", message)
+                turtle.right(float(amount))
+            elif "forward:" in message.lower():
+                amount = substring_after("forward:", message)
+                turtle.forward(float(amount))
+            elif "backward:" in message.lower():
+                amount = substring_after("backward:", message)
+                turtle.backward(float(amount))
+            elif "circle:" in message.lower():
+                amount = substring_after("circle:", message)
+                turtle.circle(float(amount))
+            elif "color:" in message.lower():
+                    color = substring_after("color:", message)
+                    turtle.pencolor(color)
+        except:
+            print("invalid input")
+
+```
+
