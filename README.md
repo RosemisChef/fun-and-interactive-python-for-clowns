@@ -15,7 +15,7 @@ An API is a way of talking to a website with code. API's work kind of like filli
 - They read the form, validate your signature/money, and go into the back room
 - The dealer brings back 20 bananas, subtracts 20 from their banana inventory sheet, and adds $50 to their revenue sheet
 
-API's are about filling out forms (some simple, some complicated) to give websites information or get information out of them
+API's are about filling out forms (some simple, some complicated) to give websites information or get information out of them. We are going to use a Youtube API to request information from Youtube. Luckily a lot of the hard parts are already handled for us.
 
 Youtube has 2 API's (that we care about):
 1) [The Public API](https://developers.google.com/youtube/v3/live/docs/liveChatMessages) - This is the API you are supposed to use, but it has limits on how many requests you can make and is generally complicated to set up
