@@ -139,7 +139,7 @@ First, add this above the for loop:
 Anywhere between `if __name__ == '__main__':` and `for chat_item in chat_download:` will work. If we put it inside the for loop, it would be reset every time the loop runs through an iteration. This is the variable we will use to keep track of how many times ":_carnieCheer:" was sent. 
 
 
-**A quick detour to understand what a chat_item looks like inside**
+### A quick detour to understand what a chat_item looks like inside
 
 New Concepts In This Section:  
 [Accessing Dictionary Items](https://www.w3schools.com/python/python_dictionaries_access.asp)  
@@ -272,7 +272,7 @@ Note that this is from a livestream that already ended. A few fields are differe
 
 Out of that JSON, we want the message. "message" is on the top level of the JSON, so we can do `chat_item["message"]` to get it. If we wanted something deeper in the JSON like the author's name, we would have to do `chat_item["author"]["name"]` because the "name" is within the "author" section.
 
-**Tangent over, let's check that message**
+### Tangent over, let's check that message
 
 New Concepts In This Section:  
 [Python Operators (+=, >=)](https://www.w3schools.com/python/python_operators.asp)  
