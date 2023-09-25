@@ -130,7 +130,7 @@ New Concepts In This Section:
 
 Now we can start doing interesting things. Just looking at the chat is nice, but we want to do things based on what we see in the chat.
 
-Let's look at the contents of each message see if it contains ":_carnieCheer:". We will count how many there are, and if enough are sent we will display a message.
+Let's look at the contents of each message and check if it contains ":_carnieCheer:". We will count how many messages have it, and if enough are sent we will display a message in the console.
 
 First, add this above the for loop:
 ```
