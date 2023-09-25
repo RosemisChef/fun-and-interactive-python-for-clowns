@@ -319,7 +319,21 @@ Now let's make something happen when the count reaches 100. The whole for loop s
             ''')
             cheer_count = 0
 ```
-The new section says "If the number of cheers is greater than or equal to 100, print a Coni ASCII art and reset the count to 0"
+The new section says "If the number of cheers is greater than or equal to 100, print a Coni ASCII art and reset the count to 0". Hit the green Play button and watch it run. If it is a past broadcast, it might be too quick to catch the ASCII. You can CTRL + F a chunk of the ASCII within the console to find it. In the included stream url it should show up exactly once.
+
+### Chat draws a picture
+
+We can use a built in library called [turtle](https://realpython.com/beginners-guide-python-turtle) to demonstrate drawing pictures with chat messages. A turtle can move forwards, backwards, rotate left and right, and change colors. Wherever it walks it draws. It has a bunch more settings but let's just stick with something basic.
+
+At the top of the file, add the following line to import the turtle library:
+```python
+import turtle
+```
+
+And running this on the VOD, it draws... well what are the odds. I swear I didn't plan this.
+
+Let's give chat the power to change the color of the line. Apparently Python has a [bafflingly long list of named colors](https://www.discogcodingacademy.com/turtle-colours). As much as I'd like to add 752 lines of colors to this document, I think we can compromise with 7.
+
 
 
 
