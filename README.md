@@ -32,6 +32,8 @@ In the section that pops up, search for "chat-downloader" and install it (hoveri
 
 ## Getting chat (the fun part)
 
+At the start of each section I'll include a link to more information about new concepts that are about to come up. You can read them first or refer back to them when they show up in the code.
+
 New Concepts In This Section:  
 [Print](https://www.w3schools.com/python/ref_func_print.asp)  
 [Strings](https://www.w3schools.com/python/python_strings.asp)  
