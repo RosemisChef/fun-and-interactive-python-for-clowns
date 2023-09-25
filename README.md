@@ -32,6 +32,12 @@ In the section that pops up, search for "chat-downloader" and install it (hoveri
 
 ## Getting chat (the fun part)
 
+New Concepts In This Section:
+[Print](https://www.w3schools.com/python/ref_func_print.asp)
+[Strings](https://www.w3schools.com/python/python_strings.asp)
+[Comments](https://www.w3schools.com/python/python_comments.asp)
+Functions (which we will ignore for now)
+
 You should be in a file called "main.py" with code that looks like this:
 ```python
 # This is a sample Python script.
@@ -63,6 +69,13 @@ Now that we know that Python works, delete everything in the file. Yep, just sel
 
 ### Chat Downloader
 
+New Concepts In This Section:  
+[Variables](https://www.w3schools.com/python/python_variables.asp)  
+[Indentation](https://www.w3schools.com/python/gloss_python_indentation.asp)  
+Optional reading, probably better to ignore for now:  
+[Modules](https://www.w3schools.com/python/python_modules.asp)  
+[Creating Objects](https://www.w3schools.com/python/python_classes.asp)  
+
 Copy paste this into the blank file:
 ```python
 from chat_downloader import ChatDownloader
@@ -88,6 +101,9 @@ This describes what kinds of things from the chat we want to look at. For now we
 
 ### Looking through chat
 
+New Concepts In This Section:    
+[For Loops](https://www.w3schools.com/python/python_for_loops.asp)  
+
 Running this code right now will do nothing. You can click play and it should run, but we aren't doing anything with the chat messages. Add this to the bottom of the code:
 ```python
     # Look at each chat message as they are added
@@ -107,6 +123,9 @@ Click the green Play Button and you should see the chat history (or live chat if
 
 ### Exploring the chat_item
 
+New Concepts In This Section:  
+[Variable Scope](https://www.w3schools.com/python/python_scope.asp)  
+
 Now we can start doing interesting things. Just looking at the chat is nice, but we want to do things based on what we see in the chat.
 
 Let's look at the contents of each message see if it contains ":_carnieCheer:". We will count how many there are, and if enough are sent we will display a message.
@@ -115,14 +134,18 @@ First, add this above the for loop:
 ```
     cheer_count = 0
 ```
-Anywhere between `if __name__ == '__main__':` and `for chat_item in chat_download:` will work. This is the variable we will use to keep track of how many times ":_carnieCheer:" was sent. 
+Anywhere between `if __name__ == '__main__':` and `for chat_item in chat_download:` will work. If we put it inside the for loop, it would be reset every time the loop runs through an iteration. This is the variable we will use to keep track of how many times ":_carnieCheer:" was sent. 
 
 
 **A quick detour to understand what a chat_item looks like inside**
 
-We want to get the "message" out of the chat_item so we can see if it has a ":_carnieCheer:" in it. Earlier we thought of chat_item as a page in a book, but what is on the page? One way to find out is to check the documentation: https://chat-downloader.readthedocs.io/en/latest/items.html
+New Concepts In This Section:  
+[Accessing Dictionary Items](https://www.w3schools.com/python/python_dictionaries_access.asp)  
+[JSON Syntax](https://www.w3schools.com/python/python_json.asp)
 
-But a more hands on way is to dump all the data from each message. Add this within the for loop, right below the `chat_download.print_formatted(chat_item)`. As a checkpoint, the whole code should look something like this:
+We want to get the "message" out of the chat_item so we can see if it has a ":_carnieCheer:" in it. Earlier we thought of chat_item as a page in a book, but what is on the page? One way to find out is to check the documentation for chat-downloader: https://chat-downloader.readthedocs.io/en/latest/items.html
+
+But a more hands on way is to dump all the data from each message. Here we will use the "json" module to make the data easier to read. Add this within the for loop, right below the `chat_download.print_formatted(chat_item)`. As a checkpoint, the whole code should look something like this:
 ```python
 from chat_downloader import ChatDownloader
 import json
@@ -249,17 +272,22 @@ Out of that JSON, we want the message. "message" is on the top level of the JSON
 
 **Tangent over, let's check that message**
 
-First let's delete the `print(json.dumps(chat_item, indent=2))`, that's just too much spam. You can add it back temporarily at any time if you want to check what the `chat_item`s look like.
+New Concepts In This Section:  
+[Python Operators (+=, >=)](https://www.w3schools.com/python/python_operators.asp)  
+[Python "in" keyword for strings](https://www.w3schools.com/python/ref_keyword_in.asp)  
+[If Statements](https://www.w3schools.com/python/python_conditions.asp)
+[Multiline Strings](https://www.w3schools.com/python/gloss_python_multi_line_strings.asp)  
+
+First let's delete the line `print(json.dumps(chat_item, indent=2))`. It was nice to look at for a minute, but it's really spamming the console. You can add it back temporarily at any time if you want to check what the `chat_item`s look like.
 You can check if one string contains another string with the "in" keyword. Add this within the for loop:
 ```python
          if ":_carnieCheer:" in chat_item["message"]:
             cheer_count += 1
 ```
-This says:
-
+This says:  
 "If the 'message' field from this chat_item contains the string ":_carnieCheer:" anywhere in it, add 1 to the variable cheer_count"
 
-One per customer though, you can only increment it by 1 per chat.
+One per customer though, you can only increment cheer_count by 1 per chat.
 
 Now let's make something happen when the count reaches 100. The whole for loop should look something like this:
 ```python
@@ -319,9 +347,13 @@ Now let's make something happen when the count reaches 100. The whole for loop s
             ''')
             cheer_count = 0
 ```
-The new section says "If the number of cheers is greater than or equal to 100, print a Coni ASCII art and reset the count to 0". Hit the green Play button and watch it run. If it is a past broadcast, it might be too quick to catch the ASCII. You can CTRL + F a chunk of the ASCII within the console to find it. In the included stream url it should show up exactly once.
+The new section says "If the number of cheers is greater than or equal to 100, print a Coni ASCII art and reset the count to 0". Hit the green Play button and watch it run. If it is a past broadcast it might move too quick to catch the ASCII. You can CTRL + F a chunk of the ASCII within the console to find it. In the included stream url it should show up exactly once.
 
 ### Chat draws a picture
+
+New Concepts In This Section:  
+[If Statements Using "elif"](https://www.w3schools.com/python/python_conditions.asp)  
+[String methods - .lower()](https://www.w3schools.com/python/ref_string_lower.asp)  
 
 We can use a built in library called [turtle](https://realpython.com/beginners-guide-python-turtle) to demonstrate drawing pictures with chat messages. A turtle can move forwards, backwards, rotate left and right, draw a circle, and change colors. Wherever it walks it draws. It has a bunch more settings but let's just stick with something basic for now.
 
@@ -341,7 +373,7 @@ We also need to do a bit of setup to make the turtle and screen work, but it sho
     turtle.color("green")
 ```
 
-Using the same trick as before, we can check if each chat message contains "left", "right", "forward", "backward", or "circle". If it has one of those, we will make the turtle rotate or move correspondingly:
+Using the same trick as before, we can check if each chat message contains "left", "right", "forward", "backward", or "circle". If it has one of those, we will make the turtle rotate or move correspondingly. Note that we use `if` and `elif` here to limit each chat message to one command:
 ```python
         if "left" in chat_item["message"].lower():
             turtle.left(90)
@@ -356,7 +388,15 @@ Using the same trick as before, we can check if each chat message contains "left
 ```
 And running this on the VOD, it draws... well what are the odds. I swear I didn't plan this.
 
-Next let's give chat the power to change the color of the line. If the turtle gets an invalid color it crashes the whole program, so we have to be careful. Crashed program = no more picture. Apparently Python has a [bafflingly long list of named colors](https://www.discogcodingacademy.com/turtle-colours). Instead of adding them all manually, we can let chat try a color and recover if it fails. As another checkpoint, here is the whole code with a new section for color at the bottom: 
+### Dynamic inputs from chat
+
+New Concepts In This Section:  
+[Try/Except](https://www.w3schools.com/python/python_try_except.asp)  
+[String .index() function](https://www.w3schools.com/python/ref_string_index.asp)  
+[String Slicing](https://www.w3schools.com/python/python_strings_slicing.asp)
+[String .strip() function](https://www.w3schools.com/python/ref_string_strip.asp)
+
+Next let's give chat the power to change the color of the line. If the turtle gets an invalid color it crashes the whole program, so we have to be careful. Crashed program = no more picture. Apparently Python has a [bafflingly long and specific list of named colors](https://www.discogcodingacademy.com/turtle-colours). Instead of adding them all manually, we can let chat try a color and recover if it fails. As another checkpoint, here is the whole code with a new section for color at the bottom: 
 ```python
 from chat_downloader import ChatDownloader
 import json
@@ -459,7 +499,7 @@ if __name__ == '__main__':
                 print("hey thats not a color")
 
 ```
-The new section uses a "try/catch" (or in Python I guess it's a "try/except":
+The new section uses a "try/catch" (or in Python I guess it's a "try/except"):
 ```python
         if "color:" in chat_item["message"].lower():
             try:
@@ -471,28 +511,39 @@ The new section uses a "try/catch" (or in Python I guess it's a "try/except":
                 print("hey thats not a color")
 
 ```
-This code says "If a chat message has `color:` in it, pull out everything after `color:`, remove all the spaces at the beginning and end and assume it's a color. If anything goes wrong, give up and print 'hey thats not a color' instead of crashing"
+This code says "If a chat message has `color:` in it, pull out everything after `color:`, remove all the spaces at the beginning and end and assume it's a color. If anything goes wrong, give up and print 'hey thats not a color' instead of crashing".
 
 Let's break down these two lines:
 ```python
                 index = chat_item["message"].index("color:") + 6
                 color = chat_item["message"][index:].strip()
 ```
-`index = chat_item["message"].index("color:") + 6` -> Find the spot in the string where "color:" starts. Then add 6 because we want to know where "color:" ends, and we know the string "color:" is 6 characters long.
+`index = chat_item["message"].index("color:") + 6` -> Find the spot in the string where "color:" starts. Then add 6 because we want to know where "color:" ends. The number 6 is used because we know the string "color:" is 6 characters long.
 
-`color = chat_item["message"][index:].strip()` -> Since we remembered where the string "color:" ends in the last line as the variable `index`, we can do chat_item["message"][index:] to get everything from that point to the end of the string. Then strip() removes all the spaces at the beginning and end.
+`color = chat_item["message"][index:].strip()` -> Since we remembered where the string "color:" ends in the last line as the variable `index`, we can do `chat_item["message"][index:]` to get everything from that point to the end of the string. Then `.strip()` removes all the spaces at the beginning and end.
 
-The logic here is that someone might type in `deaughghghh color: red    `. If we don't remove all those spaces and extra characters, people in the chat are going to complain even though thEY AREN'T READING THE INSTRUCTIONS.
+The logic here is that someone might type in `deaughghghh color: red    `. If we don't remove all those spaces and extra characters, people in the chat are going to complain that it doesn't work even though thEY AREN'T READING THE INSTRUCTIONS.
 
-TODO: Beyond this point I'm not explaining that much. I'll fix it later.
+### More custom values from the chat
+
+New Concepts In This Section:  
+[Creating and Using Functions](https://www.w3schools.com/python/python_functions.asp)  
+[Floating Point Numbers (floats)](https://www.w3schools.com/python/gloss_python_float.asp)
+[String to Float using float()](https://www.w3schools.com/python/ref_func_float.asp)  
 
 Ok now chat can draw and change colors, but they can only rotate the turtle 90 degrees and draw lines/circles of the same length. This will always draw a boring grid with circles on it. The code we just wrote would work perfectly for making the other sections adjustable, but it would be annoying to copy/paste/adjust it 5 times.
 
 Let's make a reusable function that can work for all these cases. Add this at the top of the file, it just needs to be above `if __name__ == '__main__':` because Python needs functions to be created on a line above where they are used:
 ```python
+# target is the string we are looking for
+# message is the string we are searching through
 def substring_after(target: str, message: str):
+    # Find the start of target in the message
+    # Add the length of the target string, this is the same as when we did +6 earlier, but it works for any case 
     index = message.index(target) + len(target)
+    # Get the section of the string from the end of the target to the end of the message, then remove extra spaces on either end
     substring = message[index:].strip()
+    # Return that substring to whoever called this function
     return substring
 ```
 Now we can refactor the color section to:
@@ -526,16 +577,15 @@ And we can refactor the whole "chat controls the turtle" section into something 
                 amount = substring_after("circle:", message)
                 turtle.circle(float(amount))
             elif "color:" in message.lower():
-                    color = substring_after("color:", message)
-                    turtle.pencolor(color)
+                color = substring_after("color:", message)
+                turtle.pencolor(color)
         except:
             print("invalid input")
 ```
-Here I changed all the `chat_item["message"]`s into a single variable called `message`. If you see your code spammed with the same weird looking thing over and over, it's generally a sign that a variable would make your life easier (or at least easier to read).
+Here I changed all the `chat_item["message"]`s into a single variable called `message`. If you see your code spammed with the same thing over and over, it's generally a sign that a variable or function would make your life easier (or at least make it easier to read).  
+Another difference is that all the sections besides `color:` use `float(amount)`. This is because the turtle functions want a number, not a string. Specifically they want a float, and the `float()` function can convert a string like `"123"` to a floating point number `123.0`.
 
 With this change, chat can type things like "left:5", "forward: 25", "circle:10", or "color: magenta" and it will try to process them. If any of them fail it will print "invalid input", and only one command is allowed per chat message.
-
-
 
 Here is the complete code up to this point:
 ```python
@@ -643,8 +693,8 @@ if __name__ == '__main__':
                 amount = substring_after("circle:", message)
                 turtle.circle(float(amount))
             elif "color:" in message.lower():
-                    color = substring_after("color:", message)
-                    turtle.pencolor(color)
+                color = substring_after("color:", message)
+                turtle.pencolor(color)
         except:
             print("invalid input")
 
