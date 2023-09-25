@@ -323,17 +323,214 @@ The new section says "If the number of cheers is greater than or equal to 100, p
 
 ### Chat draws a picture
 
-We can use a built in library called [turtle](https://realpython.com/beginners-guide-python-turtle) to demonstrate drawing pictures with chat messages. A turtle can move forwards, backwards, rotate left and right, and change colors. Wherever it walks it draws. It has a bunch more settings but let's just stick with something basic.
+We can use a built in library called [turtle](https://realpython.com/beginners-guide-python-turtle) to demonstrate drawing pictures with chat messages. A turtle can move forwards, backwards, rotate left and right, draw a circle, and change colors. Wherever it walks it draws. It has a bunch more settings but let's just stick with something basic for now.
 
 At the top of the file, add the following line to import the turtle library:
 ```python
 import turtle
 ```
+We also need to do a bit of setup to make the turtle and screen work, but it should be pretty self explanatory. Add this section above the for loop:
+```python
+    # Make a screen so we can watch it draw
+    screen = turtle.getscreen()
+    # Make a turtle so we can actually draw things
+    turtle = turtle.getturtle()
+    # Optional: Make the pen size bigger, default is a bit small
+    turtle.pensize(3)
+    # Optional: Set a starting color, let's pick green
+    turtle.color("green")
+```
 
+Using the same trick as before, we can check if each chat message contains "left", "right", "forward", "backward", or "circle". If it has one of those, we will make the turtle rotate or move correspondingly:
+```python
+        if "left" in chat_item["message"].lower():
+            turtle.left(90)
+        elif "right" in chat_item["message"].lower():
+            turtle.right(90)
+        elif "forward" in chat_item["message"].lower():
+            turtle.forward(100)
+        elif "backward" in chat_item["message"].lower():
+            turtle.backward(100)
+        elif "circle" in chat_item["message"].lower():
+            turtle.circle(50)
+```
 And running this on the VOD, it draws... well what are the odds. I swear I didn't plan this.
 
-Let's give chat the power to change the color of the line. Apparently Python has a [bafflingly long list of named colors](https://www.discogcodingacademy.com/turtle-colours). As much as I'd like to add 752 lines of colors to this document, I think we can compromise with 7.
+Next let's give chat the power to change the color of the line. If the turtle gets an invalid color it crashes the whole program, so we have to be careful. Crashed program = no more picture. Apparently Python has a [bafflingly long list of named colors](https://www.discogcodingacademy.com/turtle-colours). Instead of adding them all manually, we can let chat try a color and recover if it fails. As another checkpoint, here is the whole code with a new section for color at the bottom: 
+```python
+from chat_downloader import ChatDownloader
+import json
+import turtle
 
+if __name__ == '__main__':
+    # You can copy/paste any youtube livestream URL that has a chat here
+    #   If it is currently live, it will keep getting messages as they are added
+    #   If it isn't live, it will get the chat history
+    url = 'https://www.youtube.com/watch?v=L-jsPlH44Sg'
 
+    # Create a chat downloader
+    downloader = ChatDownloader()
 
+    # Give us all the messages from this livestream
+    chat_download = downloader.get_chat(url, message_groups=['messages'])
 
+    cheer_count = 0
+
+    screen = turtle.getscreen()
+    turtle = turtle.getturtle()
+    turtle.pensize(3)
+    turtle.color("green")
+
+    # Look at each chat message as they are added
+    for chat_item in chat_download:
+        chat_download.print_formatted(chat_item)
+        if ":_carnieCheer:" in chat_item["message"]:
+            cheer_count += 1
+        if cheer_count >= 100:
+            print('''
+            77?7!!!!^:!!!!!!!?Y!!!!!!!!?J~:!!!!!~:..^~!!!!!7!!!77777??????7!!!!!!!!!!!!7J?7!!!!!!~~~!~^~?7777??J
+            77?!!!!~.~!!!!!!7?J!!7!!!!!!?J~^~!!!!~^:..:~!!!!!77!!!!!!777777??77!!!!!!!!!7JJ?7!!!!!!!!7!~~777777?
+            7?7!!!!::!!!!!!!?~J!!7!!!!!~!?J7^~!!!!!!^:..:^~!!!!!!7!!!!!!!!!!!!7777777!!!!?JJ?7!!!!!!!!77!^!?7777
+            7?!!!!~.^!!!!!!!!:J!!77!!!!!~!7J?!~!!!!!!!~^::.:^~!!!!!!!!!!!!77777777777?????JYJ?7!!!!!!!!77!~!?777
+            ??!!!!:.^!!!!!!7^:Y!!!7!!!!!!~~!?J?!!!!!!!!!!!~~^::^^~~!!!!!!!7777??JJJJ??77!!!JY??7!!!!!!!!777~!?77
+            J7!!!!..~!!!!!!?::Y!!!77!!!!!!~~~!7JJ?77!!!!!!!!77!!!!!!!!77????JJJ?777!!!!!!!!7JY?7!!!!!!!!7777!!?7
+            J!!!!~..~!!!!!!7..J7!!!77!!!!!!!~~~!7?JJJJJ??7777777?J?7!!!!!7777!!!^~!!!!!!!!!!?YJ77!!!!!!!77777!!?
+            ?!!!!^..~!!!!!7~..77!!!!77!!!!!!!!!~~~!~777???????7777!~^^^~~!!!!!!!~:~!!!!!!!!!?JY?77!!!!!!!!7777~!
+            7!!!!^..^!!!!!!^..!7~!!!!!!!~~~~~~~~~^^:^^^^^^^^^^^^^^^~~!!!!!!!!!!!!::!!!!!!!!!7JYJ77!!!!!!!!!7777~
+            7~!!!:..^!~~~^~^..:7^~~~^~~!~^^^^^^^^^^:~^^^^^^^^^^^~~!!!!!!!!!!!!!!!~:~7!!!!!!!!?JY?77!!!!!!!!!777!
+            ?~~!~:..:!~^^^~^...7^~~~^^^~!~~^^^^:^^^:~^^^^^^^^~~!!!!!!!!!!!!!!!!!!!:^7!!!!!!!!?JY?7?!!!!!!!!!!!77
+            J!^!!^...!!~~^~^...~~~!~^^^^~~!!~~~^^^^:^~^^~~~~!!!!!!!!!!!!!!!!!!!!!!~:!7!!!!!!!?JYJ7?7!!!!!!!!!!!!
+            Y7^!!~...!7!!~!~...:7~!!~^^^^^~~^~!!!!!~~!!!!!!!!!!!!!!!!!!77!!!!!!!!!!:~7!!!!!!!?Y5J77?!!!!!!!!!!!!
+            YJ~^!~...^?!!!!!....~7!!7!!!!!!!::!!!!!7777777!!!!!!!!!!!!!7777777!!777~~?!!!!!!!?YY??!?77!!!!!!!!!!
+            JY7:~!:..:?7!!!7^....77!777!7777~.:~~!!!!!777777!!!!!7!!!!!777777??JJ?7~7Y!77!!!7?J7?J!7777!!!!!!!!!
+            ?Y?~:!~...7?!!!!!....:J?7??777777:.^~!!7~~77777!!!!!77!!!!!77???????777~?Y!77!!!7J?~?J!!?77!!!!!!!!!
+            7YY7^:!:..^?7!!!7~....:J??JJ??77?!..^~!?!^!77??7!!!!777!!!!!7??7777?7777JJ7777777J^~7J!!7777!!!!!!!!
+            7J??7^^^..:!?!!!!7:....:??77??777?^..:~7?~~77???7!!!777!!!!!7??7777??77?7?77?777J!.~^7777777!!!!!!!!
+            7?7.~7~::..:77!!!7!.....:?J?7??77?J~:.^!?7~~77???7!!!77!!!!!77J?777??777777?777?7:..:7?7!777!!!!!!!!
+            ??7..:~~::..^7?7777!......!??????7JY!^:^!?!~!77?7?77!!77!!!!!7YY777??77!?7?J?J5BGGPP5Y?!!777!!!!!!!!
+            J?7.....^~^::^777777!:..:::^7??????J?!~^~77~~!77?J?77!!7!!!!!7J577???YP5JYYY5G###&&&&BY??J??7!!!!!!!
+            ?J?^....:~~^^~!JJ?????!!~~^:::^~!!~!!~~~~!7!~~777?!??7!!7!!!!!?J?JJYPB5JYPPGB#B5?!!!7Y?7?JYYJJ7!!!!!
+            7JY7.....:^!YG#&&BG5YYYPGGGP5Y?!^:......::~!~~!777::!7777!!!!7YPYY5BBP5GBBBBBBBG5J^:^J!~!7YYJ7!!!!!!
+            !7YY^.:~75B&&&BGGP5PBGGP55PB##&##GY~:........:^~!7~..:^!777!7?YJ?Y?!?GBBBBBBBBBBB#J.:?~~!!YJ7!!!!!!~
+            77?YYYP#@B5J7!~^^^JY?7JGBGGGBBBB#BGPY7^..........::......:~~!!^:Y~  .YBPPGGGGGGGGGG^:?~!!!J?!~~~~~~!
+            !!!?5#@&B~:::::::JG:   7BBBBBBBBBBJ^.::....................... ~B5?7J5GP5Y???????JG!~7~!!7?!~~~~~~!!
+            !!!!7YGBB7.......PB57!?YPGGP55GGGGGY.......................... ^GJ77!J5PY!~!77777?P^!!!!^!?!~~~~!!!!
+            ~~!!!!?YGP^      5GYJJJJ???5PP5?7?YG~...........................JJ!~^^^^::^~!7!!7Y7:7~!~^77~~~~!!!7~
+            !!~~~~!!?YY~     7Y?7777!~^!JJ7~~!7Y^...........................:7~^:..::^^~!!^.~7:77!~^~?!~~~~~~~^^
+            ~!!~~~~~~~!7~^^^^!YY777!~^:...::^^:^...........  .................:::::^^^^^~^^^^:~?!~^^!7^^^^^^^^^^
+            ~~~~~~~~~~~~~!!!~^:7J7!~~^^^^::::::...........   .................:::::::^!!!7^::^?~^^^~7~^::^^^^^^^
+            777!!!!~~~!!!~^::^:^^^~~~^^^:::::::................................:::::::7YY7:::7!^^^~77^:::^^^^^^^
+            7777??JJ?7^::.:::::^:::~!!!^::::::..................................:::::::?J^::!~^^^~^7^:..:^:^^^^^
+            !!!~~~~!!7~^::::^^^~:::~JY?::::::..........................................^^:^~~^^~~:!~:...::::::^~
+            ^^^^^^^^^^~~~^^^^:^~::::~J!::::....................................:.......:^~~^^^^:.~^.....::^^~!!!
+            ^^^::::::::::::..:~:::::.^^...............................::..  ...^~^:::^^^^^^^:..:~:.....:.:^^^:::
+            ::::::::::......:!:................... ..::..:~..^!^:^7!:^?J7??7.....:::^^^:::...:^^......^^::::::::
+            ::::::::......::!^....................7J?Y5?7Y5JJYYYJJYYYY5PPPPP7.....:^::.....:::......^~^::::::...
+            ^:::::::::::::^7~....:~............. ^5P55555YJ?7!!~~~~~~~!7?JY5J......^~^^:........::~!!^:::::.::.:
+            ^~~^:::::::::~77~:::^~^..............:Y555Y?!~~~~~~~~~~~~~~~~~!?~.........:::^^^^^~~!!~^::::::::::^~
+            ::^~~~~~~^^~~~^::.:^^.................^YY?!~~~~~~~~~~~~~~~~~~~~^.............:~!!~~^^:::^:::^^~~!777
+            !~^::^^::::..:::^??^.................. :~~~~~~~~~~~~~~~~~~~~~^:...................:!????!~!!!!!!!!!~
+            ~~!~~~~~^^^^~!7^ :!7~:....................^^~~~~~~~~~~~~~~^:....................:~7J??J?!!!!!!!!!~^:
+            :^~~~~~~~!!!!!!!^: .~7~:.....................::^^~~~~~^^:....................:^!?????77!!!!~^^::....
+            ::::^~~!!!~~~~~~!!^. .~!!^:.....^:.......................................:^~7??????7~::~~::.........
+            ::......:...:::::::::^!JYYJ7!~~!^....................................:^~7???????7!^..^^:............
+            :::::::...............:^^~~~~!JJ!~^:.............................:~!J5YYYJ???7!^:...::..............
+            ''')
+            cheer_count = 0
+
+        if "left" in chat_item["message"].lower():
+            turtle.left(90)
+        elif "right" in chat_item["message"].lower():
+            turtle.right(90)
+        elif "forward" in chat_item["message"].lower():
+            turtle.forward(100)
+        elif "backward" in chat_item["message"].lower():
+            turtle.backward(100)
+        elif "circle" in chat_item["message"].lower():
+            turtle.circle(50)
+
+        if "color:" in chat_item["message"].lower():
+            try:
+                index = chat_item["message"].index("color:") + 6
+                color = chat_item["message"][index:].strip()
+                print(color)
+                turtle.pencolor(color)
+            except:
+                print("hey thats not a color")
+
+```
+The new section uses a "try/catch" (or in Python I guess it's a "try/except":
+```python
+        if "color:" in chat_item["message"].lower():
+            try:
+                index = chat_item["message"].index("color:") + 6
+                color = chat_item["message"][index:].strip()
+                print(color)
+                turtle.pencolor(color)
+            except:
+                print("hey thats not a color")
+
+```
+This code says "If a chat message has `color:` in it, pull out everything after `color:`, remove all the spaces at the beginning and end and assume it's a color. If anything goes wrong, give up and print 'hey thats not a color' instead of crashing"
+
+Let's break down these two lines:
+```python
+                index = chat_item["message"].index("color:") + 6
+                color = chat_item["message"][index:].strip()
+```
+`index = chat_item["message"].index("color:") + 6` -> Find the spot in the string where "color:" starts. Then add 6 because we want to know where "color:" ends, and we know the string "color:" is 6 characters long.
+
+`color = chat_item["message"][index:].strip()` -> Since we remembered where the string "color:" ends in the last line as the variable `index`, we can do chat_item["message"][index:] to get everything from that point to the end of the string. Then strip() removes all the spaces at the beginning and end.
+
+The logic here is that someone might type in `deaughghghh color: red    `. If we don't remove all those spaces and extra characters, people in the chat are going to complain even though thEY AREN'T READING THE INSTRUCTIONS.
+
+TODO: Beyond this point I'm not explaining that much. I'll fix it later.
+
+Ok now chat can draw and change colors, but they can only rotate the turtle 90 degrees and draw lines/circles of the same length. This will always draw a boring grid with circles on it. The code we just wrote would work perfectly for making the other sections adjustable, but it would be annoying to copy/paste/adjust it 5 times.
+
+Let's make a reusable function that can work for all these cases. Add this at the top of the file, it just needs to be above `if __name__ == '__main__':` because Python needs functions to be created on a line above where they are used:
+```python
+def substring_after(target: str, message: str):
+    index = message.index(target) + len(target)
+    substring = message[index:].strip()
+    return substring
+```
+Now we can refactor the color section to:
+```python
+        if "color:" in chat_item["message"].lower():
+            try:
+                color = substring_after("color:", chat_item["message"])
+                print(color)
+                turtle.pencolor(color)
+            except:
+                print("hey thats not a color")
+```
+And we can refactor the whole "chat controls the turtle" section into something like:
+```python
+        message = chat_item["message"]
+
+        try:
+            if "left:" in message.lower():
+                amount = substring_after("left:", message)
+                turtle.left(float(amount))
+            elif "right:" in message.lower():
+                amount = substring_after("right:", message)
+                turtle.right(float(amount))
+            elif "forward:" in message.lower():
+                amount = substring_after("forward:", message)
+                turtle.forward(float(amount))
+            elif "backward:" in message.lower():
+                amount = substring_after("backward:", message)
+                turtle.backward(float(amount))
+            elif "circle:" in message.lower():
+                amount = substring_after("circle:", message)
+                turtle.circle(float(amount))
+            elif "color:" in message.lower():
+                    color = substring_after("color:", message)
+                    turtle.pencolor(color)
+        except:
+            print("invalid input")
+```
+Here I changed all the `chat_item["message"]`s into a single variable called `message`. If you see your code spammed with the same weird looking thing over and over, it's generally a sign that a variable would make your life easier (or at least easier to read).
+
+With this change, chat can type things like "left:5", "forward: 25", "circle:10", or "color: magenta" and it will try to process them. If any of them fail it will print "invalid input", and only one command is allowed per chat message.
