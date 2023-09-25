@@ -530,7 +530,7 @@ The logic here is that someone might type in `deaughghghh color: red    `. If we
 
 New Concepts In This Section:  
 [Creating and Using Functions](https://www.w3schools.com/python/python_functions.asp)  
-[Floating Point Numbers (floats)](https://www.w3schools.com/python/gloss_python_float.asp)
+[Floating Point Numbers (floats)](https://www.w3schools.com/python/gloss_python_float.asp)  
 [String to Float using float()](https://www.w3schools.com/python/ref_func_float.asp)  
 
 Ok now chat can draw and change colors, but they can only rotate the turtle 90 degrees and draw lines/circles of the same length. This will always draw a boring grid with circles on it. The code we just wrote would work perfectly for making the other sections adjustable, but it would be annoying to copy/paste/adjust it 5 times.
