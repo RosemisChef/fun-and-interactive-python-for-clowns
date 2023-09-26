@@ -156,7 +156,7 @@ if __name__ == '__main__':
     # You can copy/paste any youtube livestream URL that has a chat here
     #   If it is currently live, it will keep getting messages as they are added
     #   If it isn't live, it will get the chat history
-    url = 'https://www.youtube.com/watch?v=a_0IGYe-Clc'
+    url = 'https://www.youtube.com/watch?v=L-jsPlH44Sg'
 
     # Create a chat downloader
     downloader = ChatDownloader()
