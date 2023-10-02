@@ -1,6 +1,8 @@
 # Fun and Interactive Python for Clowns
 A tutorial project that combines some Python basics with Youtube live chat &amp; superchat api interaction.
 
+![python-video](https://github.com/RosemisChef/fun-and-interactive-python-for-clowns/assets/145943043/eb290d9c-bcc2-4f2b-b8bb-ba9b5a115098)
+
 Intended for [Coni Confetti](https://www.youtube.com/@ConfettiConi), but anyone can use this as a starting point or example for how to work with Youtube (Innertube) livestream chat using the [Chat Downloader](https://github.com/xenova/chat-downloader/tree/master#chat-downloader) package.
 
 I've always wanted to see a visual novel which takes input from Youtube chat, and hearing Coni talk about learning Python for a similar reason inspired me to write down some of the things I have learned.
