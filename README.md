@@ -9,13 +9,7 @@ Disclaimer: I don't actually know Python, but I know enough other programming la
 
 ## Background (the boring part)
 ###  A crash course in APIs
-An API is a way of talking to a website with code. API's work kind of like filling out a form and handing it to someone. Imagine filling out a form to order 20 bananas:
-- You write down that you want 20 bananas, sign your name, and staple a $50 bill to the center of the form
-- You hand the form to the banana dealer
-- They read the form, validate your signature/money, and go into the back room
-- The dealer brings back 20 bananas, subtracts 20 from their banana inventory sheet, and adds $50 to their revenue sheet
-
-API's are about filling out forms (some simple, some complicated) to give websites information or get information out of them. We are going to use a Youtube API to request information about livestream chat from Youtube. Luckily a lot of the hard parts are already handled for us.
+An API is a way of talking to a website with code. You can think of APIs as filling out forms (some simple, some complicated) to give websites information or get information out of them. We are going to use a Youtube API to request information about livestream chat from Youtube. Luckily a lot of the hard parts are already handled for us.
 
 Youtube has 2 API's (that we care about):
 1) [The Public API](https://developers.google.com/youtube/v3/live/docs/liveChatMessages) - This is the API you are supposed to use, but it has limits on how many requests you can make and is generally complicated to set up
